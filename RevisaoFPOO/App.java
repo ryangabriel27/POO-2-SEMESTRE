@@ -156,7 +156,7 @@ public class App {
 
                                 if (petCadastrado == true) {
                                         agenda = true;
-                                                JOptionPane.showMessageDialog(null, "O seu pet está cadastrado!",
+                                        JOptionPane.showMessageDialog(null, "O seu pet está cadastrado!",
                                                         "Consulta", JOptionPane.INFORMATION_MESSAGE);
                                         while (agenda) {
 
@@ -169,22 +169,33 @@ public class App {
                                                                 JOptionPane.showInputDialog(
                                                                                 "Em qual horário você deseja fazer a consulta? (HH:MM)"));
 
-                                                for (int j = 0; j < contClientes; j++) {
-                                                        if (agendaClientes[contClientes].getAgendamento()
-                                                                        .equals(agendaClientes[j]
-                                                                                        .getAgendamento())) {
-                                                                JOptionPane.showMessageDialog(null,
-                                                                                "O horário que você deseja está ocupado! Escolha outro!",
-                                                                                "Erro!",
-                                                                                JOptionPane.ERROR_MESSAGE);
-                                                        } else {
-                                                                JOptionPane.showMessageDialog(null,
-                                                                                "Horário agendado, aguardamos sua presença : ",
-                                                                                "Sucesso",
-                                                                                JOptionPane.INFORMATION_MESSAGE);
+                                                if (contClientes != 0) {
+                                                        for (int j = 0; j < contClientes; j++) {
+                                                                if (agendaClientes[contClientes].getAgendamento()
+                                                                                .equals(agendaClientes[j]
+                                                                                                .getAgendamento())) {
+                                                                        JOptionPane.showMessageDialog(null,
+                                                                                        "O horário que você deseja está ocupado! Escolha outro!",
+                                                                                        "Erro!",
+                                                                                        JOptionPane.ERROR_MESSAGE);
+                                                                } else {
+                                                                        JOptionPane.showMessageDialog(null,
+                                                                                        "Horário agendado, aguardamos sua presença ! ",
+                                                                                        "Sucesso",
+                                                                                        JOptionPane.INFORMATION_MESSAGE);
+                                                                        contClientes++;
+                                                                        agenda = false;
+                                                                }
                                                         }
+                                                } else {
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "Horário agendado, aguardamos sua presença ! ",
+                                                                        "Sucesso",
+                                                                        JOptionPane.INFORMATION_MESSAGE);
+                                                        contClientes++;
+                                                        agenda = false;
                                                 }
-                                                contClientes++;
+
                                         }
 
                                 } else {
