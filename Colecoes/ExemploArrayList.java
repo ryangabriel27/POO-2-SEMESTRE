@@ -44,7 +44,7 @@ public class ExemploArrayList {
         numeros.add(rd.nextInt(10));
         numeros.add(rd.nextInt(10));
         System.out.println(numeros);
-
+   
         // Ordenando a lista
         Collections.sort(numeros);
         System.out.println(numeros);
