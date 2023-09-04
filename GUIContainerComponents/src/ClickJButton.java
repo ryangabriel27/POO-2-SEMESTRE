@@ -14,9 +14,7 @@ public class ClickJButton extends JFrame {
         botao1.addActionListener(e -> {
             contClicks++;
             texto1.setText("Nº de cliques: "+contClicks);
-            for (int i = 0; i < contClicks; i++) {
-                painel12.add(new JButton(""+i));
-            }
+            painel12.add(new JButton(""+contClicks));
             this.pack();
         });
         //
