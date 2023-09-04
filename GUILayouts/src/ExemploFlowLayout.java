@@ -9,5 +9,12 @@ public class ExemploFlowLayout{
         janela.setLayout(flow);
         // adicionar
         janela.add(new JLabel("Informe o valor:"));
+        JTextField input1 = new JTextField(25);
+        janela.add(input1);
+        JButton botao1 = new JButton("Enviar");
+        janela.add(botao1);
+        janela.pack();
+        janela.setDefaultCloseOperation(2);
+        janela.setVisible(true);
     }
 }
