@@ -48,7 +48,7 @@ public class Exercicio5CardLayout extends JFrame {
 
         JPanel pergunta2 = new JPanel(new BorderLayout());// -- Segunda pergunta
         pergunta2.add(new JLabel("Quem descobriu o Brasil?"), BorderLayout.NORTH);
-        JTextField resposta2 = new JTextField();
+        JTextField resposta2 = new JTextField(); 
         pergunta2.add(resposta2, BorderLayout.CENTER);
         JButton enviar2 = new JButton("Responder");
         pergunta1.add(enviar2, BorderLayout.SOUTH);
