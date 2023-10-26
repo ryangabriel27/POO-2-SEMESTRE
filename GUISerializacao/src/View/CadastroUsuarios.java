@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.awt.BorderLayout;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,9 +15,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import Control.OperacoesUsuario;
+import Control.Serializacao;
 import Model.Usuario;
 
-public class CadastroUsuarios extends JFrame {
+public class CadastroUsuarios extends JPanel {
 
     // atributos
     private JTextField inputNome;
@@ -32,10 +39,6 @@ public class CadastroUsuarios extends JFrame {
     private int linhaSelecionada = -1;
 
     public CadastroUsuarios() {
-        setTitle("Cadastro de Usuários");
-        setSize(600, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
 
         // Construir minha tabela
         tableModel = new DefaultTableModel(); // Criando o modelo de tabela
@@ -69,11 +72,51 @@ public class CadastroUsuarios extends JFrame {
         add(inputPanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
 
-        // ;
+        // Criação do arquivo binário
+        File arquivo = new File("dados.txt");
+        if (arquivo.exists()) {
+            usuarios = Serializacao.deserializar("dados.txt");
+            atualizarTabela();
+        }
+
+        // Tratamento de eventos
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                linhaSelecionada = table.rowAtPoint(evt.getPoint());
+                if (linhaSelecionada != -1) {
+                    inputNome.setText((String) table.getValueAt(linhaSelecionada, 0));
+                    inputIdade.setText(table.getValueAt(linhaSelecionada, 1).toString());
+
+                }
+            }
+        });
+        OperacoesUsuario operacoes = new OperacoesUsuario(usuarios, tableModel, table);
+        cadastrarButton.addActionListener(e -> {
+
+            operacoes.cadastrarUsuario(inputNome.getText(), inputIdade.getText());
+            inputNome.setText("");
+            inputIdade.setText("");
+
+        });
+        atualizarButton.addActionListener(e -> {
+            operacoes.atualizarUsuario(linhaSelecionada, inputNome.getText(), inputIdade.getText());
+        });
+        apagarButton.addActionListener(e -> {
+            operacoes.apagarUsuario(linhaSelecionada);
+        });
+        apagarTodosButtons.addActionListener(e -> {
+            operacoes.apagarTodosUsuarios();
+        });
+        salvarButton.addActionListener(e -> {
+            operacoes.salvarUsuarios();
+        });
     }
 
-    public void run(){
-        pack();
-        setVisible(true);
+    private void atualizarTabela() {
+        tableModel.setRowCount(0);
+        for (Usuario usuario : usuarios) {
+            tableModel.addRow(new Object[] { usuario.getNome(), usuario.getIdade() });
+        }
     }
 }

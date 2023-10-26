@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
+import Model.Agenda;
 import Model.Usuario;
 
 public class Serializacao {
@@ -30,6 +31,32 @@ public class Serializacao {
 
             // Lê a lista de usuários do arquivo e a converte de volta para a lista
             return (List<Usuario>) inputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            // Em caso de erro na deserialização, imprime a mensagem de erro
+            System.err.println("Erro ao deserializar os dados: " + e.getMessage());
+            return null; // Retorna nulo para indicar que ocorreu um erro
+        }
+    }
+
+    public static void serializar2(String arquivoAgendamento, List<Agenda> agendas) {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(arquivoAgendamento));
+            // Escreve a lista de usuários no arquivo especificado
+            outputStream.writeObject(agendas);
+            System.out.println("Dados serializados com sucesso.");
+        } catch (IOException e) {
+            // Em caso de erro na serialização, imprime a mensagem de erro
+            System.err.println("Erro ao serializar os dados: " + e.getMessage());
+        }
+    }
+
+    public static List<Agenda> deserializar2(String arquivoAgendamento) {
+        try {
+            // Abre o arquivo para leitura
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(arquivoAgendamento));
+
+            // Lê a lista de usuários do arquivo e a converte de volta para a lista
+            return (List<Agenda>)inputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             // Em caso de erro na deserialização, imprime a mensagem de erro
             System.err.println("Erro ao deserializar os dados: " + e.getMessage());
