@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 public class ConnectionDAO {
     private Connection connection;
 
+    // Construtor 
     public ConnectionDAO() {
         this.connection = ConnectionFactory.getConnection();
     }
