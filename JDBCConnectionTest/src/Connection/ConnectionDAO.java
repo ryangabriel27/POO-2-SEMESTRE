@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class ConnectionDAO {
     private Connection connection;
 
-    // Construtor 
+    // Construtor
     public ConnectionDAO() {
         this.connection = ConnectionFactory.getConnection();
     }
@@ -62,7 +62,7 @@ public class ConnectionDAO {
                 int idBuscado = resultSet.getInt("ID");
                 String nomeBuscado = resultSet.getString("NOME");
                 String emailBuscado = resultSet.getString("EMAIL");
-                JOptionPane.showMessageDialog(null,"o Resultado da busca é \nID: " + idBuscado + "\nNome: " +
+                JOptionPane.showMessageDialog(null, "o Resultado da busca é \nID: " + idBuscado + "\nNome: " +
 
                         nomeBuscado + "\nEmail: " + emailBuscado);
             }
@@ -72,4 +72,48 @@ public class ConnectionDAO {
             ConnectionFactory.closeConnection(this.connection);
         }
     }
+
+    public void apagarID(int id) {
+        String sql = "DELETE FROM MINHA_TABELA WHERE ID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeQuery();
+            JOptionPane.showMessageDialog(null, "Dado apagado com sucesso!", sql, id);
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar dados no banco de dados.", e);
+        } finally {
+            ConnectionFactory.closeConnection(this.connection);
+        }
+    }
+
+    public void atualizarId(int id, String nome, String email) {
+        String sql = "UPTADE FROM MINHA_TABELA SET nome = ?, email = ? WHERE ID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(3, id);
+            stmt.setString(1, nome);
+            stmt.setString(2, email);
+            stmt.executeQuery();
+            JOptionPane.showMessageDialog(null, "Dado alterados com sucesso!", sql, id);
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar dados no banco de dados.", e);
+        } finally {
+            ConnectionFactory.closeConnection(this.connection);
+        }
+    }
+
+    public void listarTodos() {
+        String sql = "SELECT * FROM MINHA_TABELA SET nome = ?, email = ? WHERE ID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(3, id);
+            stmt.setString(1, nome);
+            stmt.setString(2, email);
+            stmt.executeQuery();
+            JOptionPane.showMessageDialog(null, "Dado alterados com sucesso!", sql, id);
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar dados no banco de dados.", e);
+        } finally {
+            ConnectionFactory.closeConnection(this.connection);
+        }
+    }
+
 }
